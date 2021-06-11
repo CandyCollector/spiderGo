@@ -7,7 +7,7 @@ pipeline:
     image: golang:latest
     commands:
       - go env -w GOPROXY=https://goproxy.cn
-      - mkdir mod
-      - go mod init spriderGp/mod
+      # - mkdir mod
+      # - go mod init spriderGp/mod
       - go build rate_limit.go
       
