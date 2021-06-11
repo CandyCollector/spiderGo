@@ -7,7 +7,9 @@ pipeline:
     image: golang:latest
     commands:
       - go env -w GOPROXY=https://goproxy.cn
-      - go env -w GO111MODULE=auto
-      - go mod init spriderGo/test
+      -	go get github.com/gocolly/colly/v2
+      - go get github.com/gocolly/colly/v2/debug
+      # - go env -w GO111MODULE=auto
+      # - go mod init spriderGo/test
       - go run rate_limit.go
       
