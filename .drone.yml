@@ -9,5 +9,5 @@ pipeline:
       - go env -w GOPROXY=https://goproxy.cn
       - mkdir mod
       - go mod init spriderGp/mod
-      - go run rate_limit.go
+      - go build rate_limit.go
       
