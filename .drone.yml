@@ -1,0 +1,10 @@
+workspace:
+  base: /go
+  path: spriderGo
+
+pipeline:
+  build:
+    image: golang:latest
+    commands:
+      - go rate_limit.go
+      
