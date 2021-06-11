@@ -1,12 +1,12 @@
 workspace:
   base: /go
-  path: spriderGo
+  path: spriderGo/test
 
 pipeline:
   build:
     image: golang:latest
     commands:
       - go env -w GOPROXY=https://goproxy.cn
-      - go mod init ${path}
+      - go mod init spriderGo/test
       - go run rate_limit.go
       
