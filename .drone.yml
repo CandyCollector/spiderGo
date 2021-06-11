@@ -6,5 +6,5 @@ pipeline:
   build:
     image: golang:latest
     commands:
-      - go rate_limit.go
+      - go run rate_limit.go
       
