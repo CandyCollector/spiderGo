@@ -7,6 +7,6 @@ pipeline:
     image: golang:latest
     commands:
       - go env -w GOPROXY=https://goproxy.cn
-      - go mod init /spriderGp
+      - go mod init ${path}
       - go run rate_limit.go
       
