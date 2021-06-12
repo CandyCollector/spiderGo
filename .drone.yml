@@ -6,7 +6,7 @@ pipeline:
   build:
     image: golang:latest
     commands:
-    - go env -w GOPROXY=GOPROXY="https://goproxy.cn"
+    # - go env -w GOPROXY=GOPROXY="https://goproxy.cn"
     - go env -w GO111MODULE="auto"
     # - go mod init sprider
     - go run rate_limit.go
