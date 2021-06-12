@@ -6,6 +6,6 @@ pipeline:
   build:
     image: golang:latest
     commands:
-    - echo test
     - go env -w GOPROXY=GOPROXY="https://goproxy.cn"
+    - go --version
     - go run rate_limit.go
