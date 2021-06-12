@@ -1,0 +1,12 @@
+workspace:
+  base: /go
+  path: spriderGo
+
+pipeline:
+  build:
+    image: golang:latest
+    commands:
+    - go env -w GOPROXY=GOPROXY=${qingniu}
+    -	go get github.com/gocolly/colly/v2
+    - go get github.com/gocolly/colly/v2/debug
+    - go run rate_limit.go
