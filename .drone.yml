@@ -6,7 +6,7 @@ pipeline:
   build:
     image: golang:latest
     commands:
-    - export GOPROXY=https://goproxy.cn
+    # - export GOPROXY=https://goproxy.cn
     -	go get github.com/gocolly/colly/v2
     - go get github.com/gocolly/colly/v2/debug
     - go run rate_limit.go
