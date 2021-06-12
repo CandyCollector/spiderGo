@@ -7,5 +7,5 @@ pipeline:
     image: golang:latest
     commands:
     - go env -w GOPROXY=GOPROXY="https://goproxy.cn"
-    - go version
+    - go mod init
     - go run rate_limit.go
