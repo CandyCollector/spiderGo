@@ -7,6 +7,5 @@ pipeline:
     image: golang:latest
     commands:
     - go env -w GOPROXY="https://goproxy.cn"
-    # - go env -w GO111MODULE="auto"
-    - go mod tidy
-    - go run rate_limit.go
+    - go mod tidy 
+    - go run maotai.go
