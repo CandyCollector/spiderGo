@@ -4,11 +4,9 @@ workspace:
 
 pipeline:
   build:
-    image: golang:latest
+    image: golang:1.4
     commands:
     - go env -w GOPROXY="https://goproxy.cn"
-    - go env -w GO111MODULE="auto"
-    - go mod download github.com/gocolly/colly/v2
-    - go mod download github.com/gocolly/colly
-    # - go mod init sprider
+    # - go env -w GO111MODULE="auto"
+    - go mod tidy
     - go run rate_limit.go
