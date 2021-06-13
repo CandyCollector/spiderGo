@@ -21,7 +21,7 @@ func main() {
 	// Limit the number of threads started by colly to two
 	// when visiting links which domains' matches "*httpbin.*" glob
 	c.Limit(&colly.LimitRule{
-		DomainGlob:  "*httpbin.*",
+		DomainGlob:  "*https.*",
 		Parallelism: 2,
 		//Delay:      5 * time.Second,
 	})
