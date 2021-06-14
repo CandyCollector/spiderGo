@@ -24,17 +24,22 @@ func main(){
 		colly.URLFilters(
 			regexp.MustCompile("https://finance\\.sina\\.com\\.cn/realstock/company/^sh\\d{1,6}/\\.nc\\.shtml"),	
 	))
-
+	//使用扩展插件 
 	extensions.RandomUserAgent(c)
 	extensions.Referer(c)
 
 	c.OnHTML("a[href]",func(e *colly.HTMLElement){
-		e.request.Visit(e.Attr("href"))
+		e.Request.Visit(e.Attr("href"))
 	})
 
 	c.OnRequest(func(r *colly.Request){
 		fmt.Println("Visting",r.url)
 	})
+
+	c.OnError(func(response *colly.Response, err error) {
+        fmt.Println(err)
+    })
+	
 
 	c.Visit("https://finance.sina.com.cn/realstock/company")
 	fmt.Printf("花费时间:%s",time.Since(t))
