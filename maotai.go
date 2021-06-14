@@ -20,7 +20,7 @@ func main(){
 		// 域名过滤 支持正则
 		// https://finance.sina.com.cn/realstock/company/sh600519/nc.shtml
 		colly.URLFilters(
-			regexp,MustCompile("https://finance\\.sina\\.com\\.cn/realstock/company/^sh\\d{1,6}/\\.nc\\.shtml")		
+			regexp,MustCompile("https://finance\\.sina\\.com\\.cn/realstock/company/^sh\\d{1,6}/\\.nc\\.shtml"),	
 	))
 
 	extensions.RandomUserAgent(c)
