@@ -33,13 +33,13 @@ func main(){
 	})
 
 	c.OnRequest(func(r *colly.Request){
-		fmt.Println("Visting",r.url)
+		fmt.Println("Visting",r.URL)
 	})
 
 	c.OnError(func(response *colly.Response, err error) {
         fmt.Println(err)
     })
-	
+
 
 	c.Visit("https://finance.sina.com.cn/realstock/company")
 	fmt.Printf("花费时间:%s",time.Since(t))
