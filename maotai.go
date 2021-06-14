@@ -34,6 +34,6 @@ func main(){
 		fmt.Println("Visting",r.url)
 	})
 
-	c.Visit(https://finance.sina.com.cn/realstock/company)
+	c.Visit("https://finance.sina.com.cn/realstock/company")
 
 }
