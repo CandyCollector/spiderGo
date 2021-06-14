@@ -17,9 +17,10 @@ func main(){
 		colly.Async(),
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
-		// 限制域名 支持正则
+		// 域名过滤 支持正则
 		// https://finance.sina.com.cn/realstock/company/sh600519/nc.shtml
-		colly.AllowedDomains("https://finance.sina.com.cn/realstock/company/^sh\\d{1,6}/.nc.shtml")		
+		colly.URLFilters(
+			regexp,MustCompile("https://finance\\.sina\\.com\\.cn/realstock/company/^sh\\d{1,6}/\\.nc\\.shtml")		
 	)
 
 	extensions.RandomUserAgent(c)
