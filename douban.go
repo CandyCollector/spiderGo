@@ -19,7 +19,7 @@ func main() {
     },
         //过滤url,去除不是https://movie.douban.com/top250?start=0&filter= 的url
         colly.URLFilters(
-            regexp.MustCompile("^(https://movie\\.douban\\.com/top250)\\?start=\\d{1，3}filter="),
+            regexp.MustCompile("^(https://movie\\.douban\\.com/top250)\\?start=\\d{1.3}&filter="),
         ),
     ) // 创建收集器
     // 响应的格式为HTML,提取页面中的链接
