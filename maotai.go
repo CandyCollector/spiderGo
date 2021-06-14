@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"regexp"
+	"time"
 
 	"github.com/gocolly/colly/v2"
 	"github.com/gocolly/colly/v2/debug"
