@@ -21,7 +21,7 @@ func main(){
 		// https://finance.sina.com.cn/realstock/company/sh600519/nc.shtml
 		colly.URLFilters(
 			regexp,MustCompile("https://finance\\.sina\\.com\\.cn/realstock/company/^sh\\d{1,6}/\\.nc\\.shtml")		
-	)
+	))
 
 	extensions.RandomUserAgent(c)
 	extensions.Refer(c)
