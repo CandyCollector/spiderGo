@@ -2,11 +2,12 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 
 	"github.com/gocolly/colly/"
 	"github.com/gocolly/colly/debug"
 	"github.com/gocolly/colly/extensions"
-	"regexp"
+	
 )
 
 func main(){
@@ -24,7 +25,7 @@ func main(){
 	))
 
 	extensions.RandomUserAgent(c)
-	extensions.Refer(c)
+	extensions.Referer(c)
 
 	c.OnHTML("a[href]",func(e *colly.HTMLElement){
 		e.request. Visit(e.Attr("href"))
