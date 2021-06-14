@@ -13,7 +13,6 @@ import (
 
 func main(){
 	t := time.Now()
-	number := 1
 	c := colly.NewCollector(
 		// 设置异步请求
 		colly.Async(),
