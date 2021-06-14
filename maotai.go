@@ -12,6 +12,27 @@ import (
 func main(){
 	t := time.Now()
 	number := 1
-	c := colly.NewCollector()
-	
+	c := colly.NewCollector(
+		// 设置异步请求
+		colly.Async(),
+		// 开启 dubugger
+		colly.Debugger(&debug.LogDebugger{}),
+		// 限制域名 支持正则
+		// https://finance.sina.com.cn/realstock/company/sh600519/nc.shtml
+		colly.AllowedDomains("https://finance.sina.com.cn/realstock/company/^sh\\d{1,6}/.nc.shtml")		
+	)
+
+	extensions.RandomUserAgent(c)
+	extensions.Refer(c)
+
+	c.OnHTML("a[href]",,fun(e *colly.HTMLElement){
+		e.request. Visit(e.Attr("href"))
+	})
+
+	c.OnRequest(fun(r *colly.Request){
+		fmt.Println("Visting",r.url)
+	})
+
+	c.Visit(https://finance.sina.com.cn/realstock/company)
+
 }
