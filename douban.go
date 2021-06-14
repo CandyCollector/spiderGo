@@ -13,8 +13,7 @@ import (
 func main() {
     t := time.Now()
     number := 1
-    c := colly.NewCollector(
-		func(c *colly.Collector) {
+    c := colly.NewCollector(func(c *colly.Collector) {
         extensions.RandomUserAgent(c) // 设置随机头
         c.Async=true
     },
