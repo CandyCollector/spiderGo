@@ -26,11 +26,11 @@ func main(){
 	extensions.RandomUserAgent(c)
 	extensions.Refer(c)
 
-	c.OnHTML("a[href]",,fun(e *colly.HTMLElement){
+	c.OnHTML("a[href]",func(e *colly.HTMLElement){
 		e.request. Visit(e.Attr("href"))
 	})
 
-	c.OnRequest(fun(r *colly.Request){
+	c.OnRequest(func(r *colly.Request){
 		fmt.Println("Visting",r.url)
 	})
 
