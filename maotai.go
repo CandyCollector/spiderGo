@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"regexp"
 
-	"github.com/gocolly/colly/"
-	"github.com/gocolly/colly/debug"
-	"github.com/gocolly/colly/extensions"
+	"github.com/gocolly/colly/v2"
+	"github.com/gocolly/colly/v2/debug"
+	"github.com/gocolly/colly/v2/extensions"
 	
 )
 
