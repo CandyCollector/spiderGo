@@ -11,7 +11,6 @@ import (
 )
 
 func main() {
-	var name string
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
@@ -51,6 +50,5 @@ func main() {
 	// http://quote.eastmoney.com/sh600519.html
 
 	c.Visit("http://quote.eastmoney.com/sh600519.html")
-	fmt.Println(name)
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
