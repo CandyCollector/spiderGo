@@ -7,7 +7,6 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
 	"github.com/gocolly/colly/v2/debug"
-	"github.com/gocolly/colly/v2/extensions"
 )
 
 func main() {
@@ -24,8 +23,8 @@ func main() {
 		// )
 	)
 	//使用扩展插件
-	extensions.RandomUserAgent(c)
-	extensions.Referer(c)
+	// extensions.RandomUserAgent(c)
+	// extensions.Referer(c)
 
 	//获取页面数据
 	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
