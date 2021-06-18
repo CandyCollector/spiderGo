@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"regexp"
-	"strconv"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -20,9 +18,9 @@ func main() {
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
-		colly.URLFilters(
-			regexp.MustCompile("^(http://quote\\.eastmoney\\.com)/sh\\d{1,6}\\.html"),
-		),
+		// colly.URLFilters(
+		// 	regexp.MustCompile("^(http://quote\\.eastmoney\\.com)/sh\\d{1,6}\\.html"),
+		// ),
 	)
 	//使用扩展插件
 	extensions.RandomUserAgent(c)
@@ -48,10 +46,9 @@ func main() {
 		fmt.Println(err)
 	})
 
-	for i := 0; i <= 100; i++ {
-		StringI := strconv.Itoa(i)
-		url := "http://quote.eastmoney.com/sh" + StringI + ".thml"
-		fmt.Println(url)
+	for i := 1; i <= 100; i++ {
+		num := fmt.Sprintf("%06d", i)
+		url := "http://quote.eastmoney.com/sh" + num + ".thml"
 		c.Visit(url)
 
 	}
