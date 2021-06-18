@@ -7,6 +7,7 @@ import (
 	"github.com/PuerkitoBio/goquery"
 	"github.com/gocolly/colly/v2"
 	"github.com/gocolly/colly/v2/debug"
+	"github.com/gocolly/colly/v2/extensions"
 )
 
 func main() {
@@ -23,17 +24,15 @@ func main() {
 		// )
 	)
 	//使用扩展插件
-	// extensions.RandomUserAgent(c)
-	// extensions.Referer(c)
+	extensions.RandomUserAgent(c)
+	extensions.Referer(c)
 
 	//获取页面数据
-	c.OnHTML("a[href]", func(e *colly.HTMLElement) {
+	// body > div.qphox.header_title.mb7  <h2 class="header-title-h2 fl" id="name">贵州茅台</h2>
+	c.OnHTML("#div h2", func(e *colly.HTMLElement) {
 		e.DOM.Each(func(i int, selection *goquery.Selection) {
-			// #name
-			name := selection.Find("header-title-h1 f1").First().Text()
-
-			fmt.Println("输出测试")
-			fmt.Println(name)
+			name := selection.Find("#name").Text()
+			fmt.Print("%s", name)
 		})
 	})
 
@@ -47,7 +46,7 @@ func main() {
 	})
 
 	// http://quote.eastmoney.com/sh600519.html
-
 	c.Visit("http://quote.eastmoney.com/sh600519.html")
+	fmt.Println("输出测试")
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
