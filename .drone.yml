@@ -11,5 +11,5 @@ pipeline:
     - go mod tidy
     
       #编译并执行
-    - go run request_context.go
-    # - go run maotai.go
+    # - go run request_context.go
+    - go test -v maotai.go
