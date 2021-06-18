@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"regexp"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -18,13 +19,21 @@ func main() {
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
-		// colly.URLFilters(
-		// 	regexp.MustCompile("^(http://quote\\.eastmoney\\.com)/sh\\d{1,6}\\.html"),
-		// ),
+		colly.URLFilters(
+			regexp.MustCompile("^(http://quote\\.eastmoney\\.com)/sh\\d{1,6}\\.html"),
+		),
 	)
 	//使用扩展插件
 	extensions.RandomUserAgent(c)
 	extensions.Referer(c)
+
+	// Limit the number of threads started by colly to two
+	// when visiting links which domains' matches "*httpbin.*" glob
+	c.Limit(&colly.LimitRule{
+		DomainGlob:  "*http.*",
+		Parallelism: 10,
+		//Delay:      5 * time.Second,
+	})
 
 	//获取页面数据
 	// body > div.qphox.header_title.mb7  <h2 class="header-title-h2 fl" id="name">贵州茅台</h2>
@@ -46,7 +55,8 @@ func main() {
 		fmt.Println(err)
 	})
 
-	for i := 1; i <= 1000; i++ {
+	// 便利股票 URL 地址
+	for i := 1; i <= 999999; i++ {
 		num := fmt.Sprintf("%06d", i)
 		url := "http://quote.eastmoney.com/sh" + num + ".html"
 		// fmt.Println(url)
@@ -54,7 +64,6 @@ func main() {
 
 	}
 
-	// http://quote.eastmoney.com/sh600519.html
 	// c.Visit("http://quote.eastmoney.com/sh000001.html")
 	c.Wait()
 	fmt.Printf("花费时间:%s", time.Since(t))
