@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"regexp"
+	"strconv"
 	"time"
 
 	"github.com/PuerkitoBio/goquery"
@@ -18,10 +20,9 @@ func main() {
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
-		// https://finance.sina.com.cn/realstock/company/sh600519/nc.shtml
-		// colly.URLFilters(
-		// 	regexp.MustCompile("^(http://quote\\.eastmoney\\.com)/sh\\d{1,6}\\.html"),
-		// )
+		colly.URLFilters(
+			regexp.MustCompile("^(http://quote\\.eastmoney\\.com)/sh\\d{1,6}\\.html"),
+		),
 	)
 	//使用扩展插件
 	extensions.RandomUserAgent(c)
@@ -29,11 +30,13 @@ func main() {
 
 	//获取页面数据
 	// body > div.qphox.header_title.mb7  <h2 class="header-title-h2 fl" id="name">贵州茅台</h2>
-	c.OnHTML("#div h2", func(e *colly.HTMLElement) {
+
+	c.OnHTML("body > div.qphox.header_title.mb7 ", func(e *colly.HTMLElement) {
 		e.DOM.Each(func(i int, selection *goquery.Selection) {
-			name := selection.Find("#name").Text()
-			fmt.Print("%s", name)
+			name := selection.Find("h2").Text()
+			fmt.Println("%s", name)
 		})
+
 	})
 
 	c.OnRequest(func(r *colly.Request) {
@@ -45,8 +48,15 @@ func main() {
 		fmt.Println(err)
 	})
 
+	for i := 0; i <= 100; i++ {
+		StringI := strconv.Itoa(i)
+		url := "http://quote.eastmoney.com/sh" + StringI + ".thml"
+		fmt.Println(url)
+		c.Visit(url)
+		c.Wait()
+	}
+
 	// http://quote.eastmoney.com/sh600519.html
-	c.Visit("http://quote.eastmoney.com/sh600519.html")
-	fmt.Println("输出测试")
+
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
