@@ -53,10 +53,10 @@ func main() {
 		url := "http://quote.eastmoney.com/sh" + StringI + ".thml"
 		fmt.Println(url)
 		c.Visit(url)
-		c.Wait()
+
 	}
 
 	// http://quote.eastmoney.com/sh600519.html
-
+	c.Wait()
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
