@@ -12,4 +12,4 @@ pipeline:
     
       #编译并执行
     # - go run request_context.go
-    - go test -v maotai.go
+    - go test -v maotai_test.go
