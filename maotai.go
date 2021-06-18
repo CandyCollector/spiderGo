@@ -46,14 +46,16 @@ func main() {
 		fmt.Println(err)
 	})
 
-	for i := 1; i <= 100; i++ {
+	for i := 1; i <= 1000; i++ {
 		num := fmt.Sprintf("%06d", i)
-		url := "http://quote.eastmoney.com/sh" + num + ".thml"
+		url := "http://quote.eastmoney.com/sh" + num + ".html"
+		// fmt.Println(url)
 		c.Visit(url)
 
 	}
 
 	// http://quote.eastmoney.com/sh600519.html
+	// c.Visit("http://quote.eastmoney.com/sh000001.html")
 	c.Wait()
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
