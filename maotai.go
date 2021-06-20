@@ -15,7 +15,7 @@ func main() {
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
-		// colly.Async(),
+		colly.Async(),
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
@@ -30,8 +30,8 @@ func main() {
 	// Limit the number of threads started by colly to two
 	// when visiting links which domains' matches "*httpbin.*" glob
 	c.Limit(&colly.LimitRule{
-		DomainGlob:  "*http.*",
-		Parallelism: 1000,
+		DomainGlob:  "**",
+		Parallelism: 2,
 		//Delay:      5 * time.Second,
 	})
 
@@ -65,6 +65,6 @@ func main() {
 	}
 
 	// c.Visit("http://quote.eastmoney.com/sh000001.html")
-	// c.Wait()
+	c.Wait()
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
