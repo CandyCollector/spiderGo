@@ -31,7 +31,7 @@ func main() {
 	// when visiting links which domains' matches "*httpbin.*" glob
 	c.Limit(&colly.LimitRule{
 		DomainGlob:  "**",
-		Parallelism: 2,
+		Parallelism: 1,
 		//Delay:      5 * time.Second,
 	})
 
