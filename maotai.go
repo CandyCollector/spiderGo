@@ -42,7 +42,7 @@ func main() {
 		e.DOM.Each(func(i int, selection *goquery.Selection) {
 			name := selection.Find("h2").Text()
 			if len(name) != 0 {
-				fmt.Println(e.Request.URL)
+				fmt.Println(name, "：", e.Request.URL)
 			}
 
 		})
