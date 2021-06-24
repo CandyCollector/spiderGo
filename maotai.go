@@ -15,7 +15,7 @@ func main() {
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
-		colly.Async(),
+		//colly.Async(),
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
