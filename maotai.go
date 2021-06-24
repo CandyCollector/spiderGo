@@ -60,7 +60,6 @@ func main() {
 
 	// 遍历股票 URL 地址
 	for i := 1; i <= 999999; i++ {
-		c.Wait(1)
 		num := fmt.Sprintf("%06d", i)
 		url := "http://quote.eastmoney.com/sh" + num + ".html"
 		// fmt.Println(url)
