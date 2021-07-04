@@ -16,7 +16,7 @@ func main() {
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
-		colly.Async(),
+		//colly.Async(),
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
@@ -32,7 +32,7 @@ func main() {
 	// when visiting links which domains' matches "*" glob
 	c.Limit(&colly.LimitRule{
 		DomainGlob:  "*",
-		Parallelism: 2,
+		Parallelism: 5,
 		//Delay:      5 * time.Second,
 	})
 
