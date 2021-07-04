@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"os"
 	"regexp"
 	"time"
 
@@ -59,8 +60,32 @@ func main() {
 	})
 
 	// 遍历股票 URL 地址
-	for i := 1; i <= 999999; i++ {
-		num := fmt.Sprintf("%06d", i)
+	file, err := os.Open("number.txt")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer file.Close()
+
+	fileinfo, err := file.Stat()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	filesize := fileinfo.Size()
+	buffer := make([]byte, filesize)
+
+	bytesread, err := file.Read(buffer)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Println("bytes read: ", bytesread)
+
+	for i := 0; i <= 14103; i++ {
+		var num = string(buffer)
 		url := "http://quote.eastmoney.com/sh" + num + ".html"
 		// fmt.Println(url)
 		c.Visit(url)
