@@ -29,9 +29,8 @@ func main() {
 	}
 
 	fmt.Println("bytes read: ", bytesread)
-
-	for i := 0; i <= 14103; i++ {
-		var num = string(buffer[i])
+	var num string = string(buffer[:])
+	for i := 0; i < len(num); i++ {
 		fmt.Printf(num)
 	}
 }

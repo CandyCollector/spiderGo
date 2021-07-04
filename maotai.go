@@ -83,16 +83,15 @@ func main() {
 	}
 
 	fmt.Println("bytes read: ", bytesread)
-
-	for i := 0; i <= 14103; i++ {
-		var num = string(buffer)
-		url := "http://quote.eastmoney.com/sh" + num + ".html"
-		// fmt.Println(url)
-		c.Visit(url)
+	var num = string(buffer[:])
+	for i := 0; i < len(num); i++ {
+		url := "http://quote.eastmoney.com/sh" + string(num[i]) + ".html"
+		fmt.Println(url)
+		// c.Visit(url)
 
 	}
 
 	// c.Visit("http://quote.eastmoney.com/sh000001.html")
 	c.Wait()
-	fmt.Printf("花费时间:%s", time.Since(t))
+	fmt.Print("花费时间:%s", time.Since(t))
 }
