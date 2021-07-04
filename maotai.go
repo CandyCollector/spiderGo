@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
 	"os"
 	"regexp"
@@ -67,27 +68,24 @@ func main() {
 	}
 	defer file.Close()
 
-	fileinfo, err := file.Stat()
-	if err != nil {
-		fmt.Println(err)
-		return
+	scanner := bufio.NewScanner(file)
+	scanner.Split(bufio.ScanLines)
+
+	// This is our buffer now
+	var lines []string
+
+	for scanner.Scan() {
+		lines = append(lines, scanner.Text())
 	}
 
-	filesize := fileinfo.Size()
-	buffer := make([]byte, filesize)
-
-	bytesread, err := file.Read(buffer)
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	fmt.Println("bytes read: ", bytesread)
-	var num = string(buffer[:])
-	for i := 0; i < len(num); i++ {
-		url := "http://quote.eastmoney.com/sh" + string(num[i]) + ".html"
-		fmt.Println(url)
-		// c.Visit(url)
+	fmt.Println("read lines:")
+	// for _, line := range lines {
+	// 	fmt.Println(line)
+	// }
+	for _, line := range lines {
+		url := "http://quote.eastmoney.com/sh" + line + ".html"
+		// fmt.Println(url)
+		c.Visit(url)
 
 	}
 
