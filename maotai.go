@@ -91,5 +91,5 @@ func main() {
 
 	// c.Visit("http://quote.eastmoney.com/sh000001.html")
 	c.Wait()
-	fmt.Print("花费时间:%s", time.Since(t))
+	fmt.Printf("花费时间:%s", time.Since(t))
 }
