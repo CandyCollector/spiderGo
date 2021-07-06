@@ -17,7 +17,7 @@ func main() {
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
-		//colly.Async(),
+		colly.Async(),
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
@@ -78,7 +78,7 @@ func main() {
 		lines = append(lines, scanner.Text())
 	}
 
-	fmt.Println("read lines:")
+	// fmt.Println("read lines:")
 	// for _, line := range lines {
 	// 	fmt.Println(line)
 	// }
@@ -91,5 +91,5 @@ func main() {
 
 	// c.Visit("http://quote.eastmoney.com/sh000001.html")
 	c.Wait()
-	fmt.Print("花费时间:%s", time.Since(t))
+	fmt.Printf("花费时间:%s", time.Since(t))
 }
