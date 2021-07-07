@@ -38,15 +38,18 @@ func main() {
 	//获取页面数据
 	// body > div.qphox.header_title.mb7  <h2 class="header-title-h2 fl" id="name">贵州茅台</h2>
 	// #price9
-	// #day
+	// //*[@id="day"]  #price9
 
-	c.OnHTML("", func(e *colly.HTMLElement) {
+	c.OnHTML("body", func(e *colly.HTMLElement) {
+
+		test := e.DOM.Find("#price9").Eq(0).Text()
 		e.DOM.Each(func(i int, selection *goquery.Selection) {
-			name := selection.Find("body > div.qphox.header_title.mb7 h2").Text()
-			code := selection.Find("body > div.qphox.header_title.mb7 b").Text()
-			time := selection.Find("/html/body/div[10]/div[2]/span[1]").Text()
+			name := selection.Find("#name").Text()
+			code := selection.Find("#code").Text()
+			time := selection.Find("#hqday").Text()
+			price := selection.Find("#gt1").Text()
 			if len(name) != 0 {
-				fmt.Println(name, "：", code, " ", time)
+				fmt.Println(name, ":", code, ":", time, ":", price, "test:", test)
 			}
 
 		})
