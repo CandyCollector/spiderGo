@@ -15,7 +15,7 @@ func main() {
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
-		// colly.Async(),
+		//colly.Async(),
 		// 开启 dubugger
 		colly.Debugger(&debug.LogDebugger{}),
 		// 域名过滤 支持正则
@@ -28,10 +28,10 @@ func main() {
 	extensions.Referer(c)
 
 	// Limit the number of threads started by colly to two
-	// when visiting links which domains' matches "*httpbin.*" glob
+	// when visiting links which domains' matches "*" glob
 	c.Limit(&colly.LimitRule{
-		DomainGlob:  "*http.*",
-		Parallelism: 10000,
+		DomainGlob:  "*",
+		Parallelism: 5,
 		//Delay:      5 * time.Second,
 	})
 
@@ -41,7 +41,10 @@ func main() {
 	c.OnHTML("body > div.qphox.header_title.mb7 ", func(e *colly.HTMLElement) {
 		e.DOM.Each(func(i int, selection *goquery.Selection) {
 			name := selection.Find("h2").Text()
-			fmt.Println("%s", name)
+			if len(name) != 0 {
+				fmt.Println(name, "：", e.Request.URL)
+			}
+
 		})
 
 	})
@@ -55,7 +58,7 @@ func main() {
 		fmt.Println(err)
 	})
 
-	// 便利股票 URL 地址
+	// 遍历股票 URL 地址
 	for i := 1; i <= 999999; i++ {
 		num := fmt.Sprintf("%06d", i)
 		url := "http://quote.eastmoney.com/sh" + num + ".html"
@@ -65,6 +68,6 @@ func main() {
 	}
 
 	// c.Visit("http://quote.eastmoney.com/sh000001.html")
-	// c.Wait()
+	c.Wait()
 	fmt.Printf("花费时间:%s", time.Since(t))
 }
