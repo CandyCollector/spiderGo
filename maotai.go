@@ -42,15 +42,18 @@ func main() {
 
 	c.OnHTML("body", func(e *colly.HTMLElement) {
 
-		test := e.DOM.Find("#price9").Eq(0).Text()
+		// test := e.DOM.Find("#price9").Text()
+		// fmt.Println(test)
 		e.DOM.Each(func(i int, selection *goquery.Selection) {
-			name := selection.Find("#name").Text()
-			code := selection.Find("#code").Text()
-			time := selection.Find("#hqday").Text()
-			price := selection.Find("#gt1").Text()
-			if len(name) != 0 {
-				fmt.Println(name, ":", code, ":", time, ":", price, "test:", test)
-			}
+			fmt.Println(selection.Text())
+
+			// 	name := selection.Find("#name").Text()
+			// 	code := selection.Find("#code").Text()
+			// 	time := selection.Find("#hqday").Text()
+			// 	price := selection.Find("#gt1").Text()
+			// 	if len(name) != 0 {
+			// 		fmt.Println(name, ":", code, ":", time, ":", price, "test:", test)
+			// 	}
 
 		})
 
