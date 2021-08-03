@@ -1,40 +1,52 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"regexp"
 	"time"
-	"encoding/json"
+
 	"github.com/gocolly/colly/v2"
 	"github.com/gocolly/colly/v2/debug"
 	"github.com/gocolly/colly/v2/extensions"
+	"gopkg.in/mgo.v2"
 )
 
 // 43：当前股价
 // 46：今开 44：最高 51：涨停 47：成交量
 // 60：昨收 45：最低 52：跌停 50：量比 48：成交额
 // 86: 时间戳
-type juery struct {
-	Rc   int `json:"rc"`
-	Rt   int `json:"rt"`
-	Svr  int `json:"svr"`
-	Lt   int `json:"lt"`
-	Full int `json:"full"`
-	Data struct {
-		F43 float64 `json:"f43"`
-		F44 float64 `json:"f44"`
-		F45 float64 `json:"f45"`
-		F47 int     `json:"f47"`
-		F48 float64 `json:"f48"`
-		F50 float64 `json:"f50"`
-		F51 float64 `json:"f51"`
-		F52 float64 `json:"f52"`
-		F60 float64 `json:"f60"`
-		F86 int     `json:"f86"`
-	} `json:"data"`
+type data struct {
+	F43 float64 `json:"f43"`
+	F44 float64 `json:"f44"`
+	F45 float64 `json:"f45"`
+	F47 int     `json:"f47"`
+	F48 float64 `json:"f48"`
+	F50 float64 `json:"f50"`
+	F51 float64 `json:"f51"`
+	F52 float64 `json:"f52"`
+	F60 float64 `json:"f60"`
+	F86 int     `json:"f86"`
 }
 
 func main() {
+	//连接 mongodb
+	dialInfo := &mgo.DialInfo{
+		Addrs:     []string{"120.77.*.*:27017"}, //远程(或本地)服务器地址及端口号
+		Direct:    false,
+		Timeout:   time.Second * 1,
+		Database:  "admin", //数据库
+		Source:    "admin",
+		Username:  "root",
+		Password:  "root",
+		PoolLimit: 4096, // Session.SetPoolLimit
+	}
+	session, err := mgo.DialWithInfo(dialInfo)
+	if err != nil {
+		panic(err)
+	}
+	defer session.Close()
+
 	t := time.Now()
 	c := colly.NewCollector(
 		// 设置异步请求
@@ -55,36 +67,22 @@ func main() {
 	c.Limit(&colly.LimitRule{
 		DomainGlob:  "*",
 		Parallelism: 5,
-		//Delay:      5 * time.Second,
+		//Delay:     5 * time.Second,
 	})
 
-	//获取页面数据
-	// body > div.qphox.header_title.mb7  <h2 class="header-title-h2 fl" id="name">贵州茅台</h2>
-	// #price9
-	// //*[@id="day"]  #price9
-
-	// c.OnHTML("body", func(e *colly.HTMLElement) {
-
-	// 	// test := e.DOM.Find("/html/body/div[10]/div[2]/span[1]").Text()
-	// 	// fmt.Println("test:", test)
-	// 	e.DOM.Each(func(i int, selection *goquery.Selection) {
-	// 		// 	// name := selection.Find("#name").Text()
-	// 		// 	// code := selection.Find("#code").Text()
-	// 		// 	// time := selection.Find("#day").Text()
-	// 		// 	// price := selection.Find("#gt1").Text()
-	// 		fmt.Println(selection.Text())
-	// 	})
-
-	// })
-
+	// 处理接口返回 json 数据
 	c.OnResponse(func(r *colly.Response) {
-		s := Split.Println(string(r.Body))
-		jue := new(juery)
-		err := json.Unmarshal(string(r.Body), jue)
-    		if err != nil {
-        		fmt.Println(err)
-    		}
-    		fmt.Println(jue)
+		//截取使用的数据
+		rel := string(r.Body)[95 : len(r.Body)-3]
+		// fmt.Println(rel)
+
+		//解析 json 数据
+		jue := new(data)
+		err := json.Unmarshal([]byte(rel), jue)
+		if err != nil {
+			fmt.Println(err)
+		}
+		fmt.Println(jue.F43)
 	})
 
 	c.OnRequest(func(r *colly.Request) {
