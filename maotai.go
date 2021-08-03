@@ -78,7 +78,7 @@ func main() {
 	// })
 
 	c.OnResponse(func(r *colly.Response) {
-		fmt.Println(string(r.Body))
+		s := Split.Println(string(r.Body))
 		jue := new(juery)
 		err := json.Unmarshal(string(r.Body), jue)
     		if err != nil {
